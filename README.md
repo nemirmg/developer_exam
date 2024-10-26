@@ -76,7 +76,111 @@ db@db-ubuntu24:~/Documents/developer_exam$ tree
 ```
 
 3. Подключить дополнительный репозиторий MySQL. Установить любой пакет из этого репозитория.
+
+![Загрузка deb-файла](img/mysql_1.png)
+
+```sh
+db@db-ubuntu24:~/Documents/developer_exam$ ls -al
+total 48
+drwxrwxr-x 5 db db  4096 Oct 26 21:16 .
+drwxr-xr-x 4 db db  4096 Oct 24 18:49 ..
+drwxrwxr-x 2 db db  4096 Oct 26 20:39 animals
+drwxrwxr-x 8 db db  4096 Oct 26 20:42 .git
+drwxrwxr-x 2 db db  4096 Oct 26 21:08 img
+-rw-rw-r-- 1 db db 18072 Oct 26 21:11 mysql-apt-config_0.8.33-1_all.deb
+-rw-rw-r-- 1 db db  6650 Oct 26 20:41 README.md
+```
+
+#### Устанавливаем скачанный пакет
+```sh
+db@db-ubuntu24:~/Documents/developer_exam$ sudo dpkg -i mysql-apt-config_0.8.33-1_all.deb
+[sudo] password for db: 
+Selecting previously unselected package mysql-apt-config.
+(Reading database ... 205956 files and directories currently installed.)
+Preparing to unpack mysql-apt-config_0.8.33-1_all.deb ...
+Unpacking mysql-apt-config (0.8.33-1) ...
+Setting up mysql-apt-config (0.8.33-1) ...
+```
+
+#### Убеждаемся, что репозиторий подключён
+```sh
+db@db-ubuntu24:~/Documents/developer_exam$ cd /etc/apt/sources.list.d
+b@db-ubuntu24:/etc/apt/sources.list.d$ ls -al
+total 28
+drwxr-xr-x 2 root root 4096 Oct 26 21:20 .
+drwxr-xr-x 9 root root 4096 Sep  3 22:09 ..
+-rw-r--r-- 1 root root  117 Aug 29 07:38 docker.list
+-rw-r--r-- 1 root root  642 Oct 26 21:20 mysql.list
+-rw-r--r-- 1 root root  107 Aug  4 21:30 nginx.list
+-rw-r--r-- 1 root root  386 Aug  4 18:11 ubuntu.sources
+-rw-r--r-- 1 root root 2552 Apr 24  2024 ubuntu.sources.curtin.orig
+db@db-ubuntu24:/etc/apt/sources.list.d$ cat mysql.list
+### THIS FILE IS AUTOMATICALLY CONFIGURED ###
+# You may comment out entries below, but any other modifications may be lost.
+# Use command 'dpkg-reconfigure mysql-apt-config' as root for modifications.
+deb [signed-by=/usr/share/keyrings/mysql-apt-config.gpg] http://repo.mysql.com/apt/ubuntu/ noble mysql-apt-config
+deb [signed-by=/usr/share/keyrings/mysql-apt-config.gpg] http://repo.mysql.com/apt/ubuntu/ noble mysql-8.0
+deb [signed-by=/usr/share/keyrings/mysql-apt-config.gpg] http://repo.mysql.com/apt/ubuntu/ noble mysql-tools
+deb-src [signed-by=/usr/share/keyrings/mysql-apt-config.gpg] http://repo.mysql.com/apt/ubuntu/ noble mysql-8.0
+```
+
+#### Обновим список пакетов и установим MySQL
+```sh
+db@db-ubuntu24:/etc/apt/sources.list.d$ sudo apt update
+db@db-ubuntu24:/etc/apt/sources.list.d$ sudo apt install mysql-server mysql-client
+...
+Need to get 33.8 MB of archives.
+After this operation, 42.1 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://repo.mysql.com/apt/ubuntu noble/mysql-8.0 amd64 mysql-server amd64 8.0.40-1ubuntu24.04 [57.8 kB]
+Get:2 http://repo.mysql.com/apt/ubuntu noble/mysql-8.0 amd64 mysql-common amd64 8.0.40-1ubuntu24.04 [59.1 kB]
+Get:3 http://repo.mysql.com/apt/ubuntu noble/mysql-8.0 amd64 mysql-community-client amd64 8.0.40-1ubuntu24.04 [2,073 kB]
+Get:4 http://repo.mysql.com/apt/ubuntu noble/mysql-8.0 amd64 mysql-community-client-plugins amd64 8.0.40-1ubuntu24.04 [1,377 kB]
+Get:5 http://repo.mysql.com/apt/ubuntu noble/mysql-8.0 amd64 mysql-community-client-core amd64 8.0.40-1ubuntu24.04 [2,132 kB]
+Get:6 http://repo.mysql.com/apt/ubuntu noble/mysql-8.0 amd64 mysql-client amd64 8.0.40-1ubuntu24.04 [57.8 kB]
+Get:7 http://repo.mysql.com/apt/ubuntu noble/mysql-8.0 amd64 mysql-community-server-core amd64 8.0.40-1ubuntu24.04 [28.0 MB]
+Get:8 http://repo.mysql.com/apt/ubuntu noble/mysql-8.0 amd64 mysql-community-server amd64 8.0.40-1ubuntu24.04 [69.4 kB]
+Fetched 33.8 MB in 4s (9,262 kB/s)                     
+Preconfiguring packages ...
+...
+```
+
+#### Проверим статус
+```sh
+db@db-ubuntu24:/etc/apt/sources.list.d$ systemctl status mysql.service
+● mysql.service - MySQL Community Server
+     Loaded: loaded (/usr/lib/systemd/system/mysql.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2024-10-26 21:38:06 MSK; 7min ago
+       Docs: man:mysqld(8)
+             http://dev.mysql.com/doc/refman/en/using-systemd.html
+   Main PID: 17683 (mysqld)
+     Status: "Server is operational"
+      Tasks: 37 (limit: 4614)
+     Memory: 517.3M (peak: 517.8M)
+        CPU: 21.518s
+     CGroup: /system.slice/mysql.service
+             └─17683 /usr/sbin/mysqld
+
+Oct 26 21:37:42 db-ubuntu24 systemd[1]: Starting mysql.service - MySQL Community Server...
+Oct 26 21:38:06 db-ubuntu24 systemd[1]: Started mysql.service - MySQL Community Server.
+```
+
 4. Установить и удалить deb-пакет с помощью `dpkg`.
+
+В предыдущем пункте уже установили deb-пакет с помощью утилиты `dpkg`.
+
+#### Удалим deb-пакет
+```sh
+db@db-ubuntu24:/etc/apt/sources.list.d$ sudo dpkg --purge mysql-apt-config
+db@db-ubuntu24:/etc/apt/sources.list.d$ ls -al
+total 24
+drwxr-xr-x 2 root root 4096 Oct 26 21:59 .
+drwxr-xr-x 9 root root 4096 Sep  3 22:09 ..
+-rw-r--r-- 1 root root  117 Aug 29 07:38 docker.list
+-rw-r--r-- 1 root root  107 Aug  4 21:30 nginx.list
+-rw-r--r-- 1 root root  386 Aug  4 18:11 ubuntu.sources
+-rw-r--r-- 1 root root 2552 Apr 24  2024 ubuntu.sources.curtin.orig
+```
 5. Выложить историю команд в терминале ubuntu.
 6. Нарисовать диаграмму, в которой есть класс родительский класс, домашние 
 животные и вьючные животные, в составы которых в случае домашних животных войдут 
