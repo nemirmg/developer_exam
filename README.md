@@ -62,6 +62,19 @@ db@db-ubuntu24:~/Documents/developer_exam$ cat human_friends
 ```
 
 2. Создать директорию, переместить файл туда.
+
+```sh
+db@db-ubuntu24:~/Documents/developer_exam$ mkdir animals
+db@db-ubuntu24:~/Documents/developer_exam$ mv human_friends pack_animals pets animals/
+db@db-ubuntu24:~/Documents/developer_exam$ tree
+.
+├── animals
+│   ├── human_friends
+│   ├── pack_animals
+│   └── pets
+└── README.md
+```
+
 3. Подключить дополнительный репозиторий MySQL. Установить любой пакет из этого репозитория.
 4. Установить и удалить deb-пакет с помощью `dpkg`.
 5. Выложить историю команд в терминале ubuntu.
