@@ -250,6 +250,10 @@ db@db-ubuntu24:/etc/apt/sources.list.d$ history
 
 ### 7. В подключенном MySQL репозитории создать базу данных `Друзья человека`.
 
+```sql
+CREATE DATABASE IF NOT EXISTS human_friends;
+USE human_friends;
+```
 
 8. Создать таблицы с иерархией из диаграммы в БД.
 9. Заполнить низкоуровневые таблицы именами (животных), командами которые они 
