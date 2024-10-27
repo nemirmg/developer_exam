@@ -179,7 +179,69 @@ drwxr-xr-x 9 root root 4096 Sep  3 22:09 ..
 ```
 ### 5. Выложить историю команд в терминале ubuntu.
 
-Сразу сделал при выполнении заданий.
+```sh
+db@db-ubuntu24:/etc/apt/sources.list.d$ history
+ ...
+ 1299  mkdir developer_exam
+ 1300  cd developer_exam/
+ ...
+ 1319  echo "# developer_exam" >> README.md
+ 1320  git init
+ 1321  git add README.md
+ 1322  git commit -m "first commit"
+ 1323  git branch -M main
+ 1324  git remote add origin https://github.com/nemirmg/developer_exam.git
+ 1325  git push -u origin main
+ 1326  git status
+ 1327  git add README.md 
+ 1328  git commit -m "Добавил описание"
+ 1329  git push
+ 1330  git pull
+ 1331  ls -al
+ 1332  cat >> pets
+ 1333  cat pets
+ 1334  cat >> pack_animals
+ 1335  cat pets pack_animals > human_friends
+ 1336  cat human_friends 
+ 1337  git status
+ 1338  git add .
+ 1339  git commit -m "Решение 1 задания"
+ 1340  git push
+ 1341  mkdir animals
+ ...
+ 1346  mv human_friends pack_animals pets animals/
+ 1347  tree
+ 1348  git status
+ 1349  git add .
+ 1350  git commit -m "Решение 2 задания"
+ 1351  git push
+ ...
+ 1365  ls -al
+ 1366  sudo dpkg -i mysql-apt-config_0.8.33-1_all.deb
+ 1367  cd /etc/apt
+ 1368  ls -al
+ 1369  cd sources.list.d/
+ 1370  ls -al
+ 1371  cat mysql.list
+ 1372  sudo apt update
+ 1373  sudo apt list --upgradable
+ 1374  sudo apt install mysql-server mysql-client
+ 1375  systemctl status mysql.service
+ 1376  sudo dpkg --purge mysql-apt-config
+ 1377  sudo dpkg -r mysql-apt-config
+ 1378  dpkg -l | grep mysql | grep ii
+ 1379  ls -al
+ 1380  git status
+ 1381  cd ~
+ 1382  cd documents/developer_exam
+ 1383  cd Documents/developer_exam
+ 1384  git status
+ 1385  git add .
+ 1386  git commit -m "Решение 3-4 заданий"
+ 1387  git push
+ 1388  git pull
+
+```
 
 ### 6. Нарисовать диаграмму, в которой есть класс родительский класс, домашние животные и вьючные животные, в составы которых в случае домашних животных войдут классы: собаки, кошки, хомяки, а в класс вьючные животные войдут: лошади, верблюды и ослы.
 
