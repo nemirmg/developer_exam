@@ -110,3 +110,12 @@ SELECT *,
  WHERE `birth_date` < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
        AND
        `birth_date` > DATE_SUB(CURDATE(), INTERVAL 3 YEAR);
+
+SELECT *
+  FROM `ungulate`
+ UNION
+SELECT `id`,
+       `animal_name`,
+       `birth_date`,
+       `animal_genus_id`
+  FROM `young_animal`;
