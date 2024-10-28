@@ -257,9 +257,51 @@ USE human_friends;
 
 ### 8. Создать таблицы с иерархией из диаграммы в БД.
 
-[DDL](sql/diagram.sql)
-
 ![Диаграмма sql](img/sql_diagram.png)
+
+```sql
+CREATE TABLE `animal_type`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `type` VARCHAR(30) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `animal_genus`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `genus` VARCHAR(30) NOT NULL,
+    `animal_type_id` INT NOT NULL,
+    PRIMARY KEY(`id`),
+    FOREIGN KEY(`animal_type_id`) REFERENCES `animal_type`(`id`)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `animal`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `animal_name` VARCHAR(30) NULL,
+    `birth_date` DATE NULL,
+    `animal_genus_id` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY(`animal_genus_id`) REFERENCES `animal_genus`(`id`)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `order`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `order_name` VARCHAR(30) NOT NULL,
+    `definition` VARCHAR(255) NULL,
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `order_to`(
+    `animal_id` INT NOT NULL,
+    `order_id` INT NOT NULL,
+    PRIMARY KEY(`animal_id`, `order_id`),
+    FOREIGN KEY(`animal_id`) REFERENCES `animal`(`id`)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(`order_id`) REFERENCES `order`(`id`)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+```
 
 9. Заполнить низкоуровневые таблицы именами (животных), командами которые они 
 выполняют и датами рождения
