@@ -363,7 +363,7 @@ DELETE FROM `animal`
                               FROM `animal_genus`
                              WHERE `genus` = 'Верблюд');
 
-CREATE TABLE ungulate AS
+CREATE TABLE `ungulate` AS
 SELECT *
   FROM `animal`
  WHERE `animal_genus_id` IN (SELECT `id`
