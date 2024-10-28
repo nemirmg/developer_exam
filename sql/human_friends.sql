@@ -90,3 +90,15 @@ VALUES (1, 1), (1, 2),
        (10, 4), (10, 7),
        (11, 4), (11, 8),
        (12, 6);
+
+DELETE FROM `animal`
+ WHERE `animal_genus_id` = (SELECT `id`
+                              FROM `animal_genus`
+					         WHERE `genus` = 'Верблюд');
+
+CREATE TABLE ungulate AS
+SELECT *
+  FROM `animal`
+ WHERE `animal_genus_id` IN (SELECT `id`
+                               FROM `animal_genus`
+							  WHERE `genus` IN ('Осёл', 'Лошадь'));
