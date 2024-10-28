@@ -96,9 +96,17 @@ DELETE FROM `animal`
                               FROM `animal_genus`
 					         WHERE `genus` = 'Верблюд');
 
-CREATE TABLE ungulate AS
+CREATE TABLE `ungulate` AS
 SELECT *
   FROM `animal`
  WHERE `animal_genus_id` IN (SELECT `id`
                                FROM `animal_genus`
 							  WHERE `genus` IN ('Осёл', 'Лошадь'));
+
+CREATE TABLE `young_animal` AS
+SELECT *, 
+       TIMESTAMPDIFF(MONTH, `birth_date`, CURDATE()) AS `age_month`
+  FROM `animal` 
+ WHERE `birth_date` < DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+       AND
+       `birth_date` > DATE_SUB(CURDATE(), INTERVAL 3 YEAR);
